@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
-
+import datetime
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -37,11 +37,24 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # Thirdy Party api Services,
+    'algoliasearch_django',
+    # Third Party Packages
+    'rest_framework',
+    'rest_framework.authtoken',
+    'corsheaders',
+    'rest_framework_simplejwt',
+    # Internal Apps
+    'api',
+    'products',
+    'search',
+
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -50,6 +63,15 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'nettrhome.urls'
+
+CORS_URLS_REGEX = r"^/api/.*"
+CORS_ALLOWED_ORIGINS = []
+
+if DEBUG:
+    CORS_ALLOWED_ORIGINS += [
+        'http://localhost:3000',
+        'https://localhost:3000',
+    ]
 
 TEMPLATES = [
     {
@@ -121,3 +143,28 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        "rest_framework.authentication.SessionAuthentication",
+        "api.authentication.TokenAuthentication",
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        "rest_framework.permissions.IsAuthenticatedOrReadOnly"  # GET
+    ],
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
+    "PAGE_SIZE": 10
+}
+# enviroment varible -> django-dotenv -> reads .env
+ALGOLIA = {
+    'APPLICATION_ID': 'EDK95X8MAM',
+    'API_KEY': 'febc89569ba38e7954094ad9e85e65d9',
+    'INDEX_PREFIX': 'brt'
+}
+
+SIMPLE_JWT = {
+    "AUTH_HEADER_TYPES": ['Bearer'],
+    "ACCESS_TOKEN_LIFETIME": datetime.timedelta(days=1),  # minutes=5
+    "REFRESH_TOKEN_LIFETIME": datetime.timedelta(days=30),  # days = 1
+}
