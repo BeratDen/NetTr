@@ -1,14 +1,57 @@
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, json } from "react-router-dom";
 import { loginHandle } from "../../utils";
 import { useSelector } from "react-redux";
+import LoginForm from "./components/LoginForm";
+import { useState } from "react";
+const baseEndpoint = process.env.REACT_APP_API_URL;
+const initFormData = Object.freeze({
+  username: "",
+  password: "",
+});
 
 export default function Login() {
   const { user } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const location = useLocation();
 
-  const loginHandler = (user) => {
-    loginHandle(user);
+  const [formData, updateFormData] = useState(initFormData);
+
+  const handleChange = (e) => {
+    updateFormData({
+      ...formData,
+      [e.target.name]: e.target.value.trim(),
+    });
+  };
+
+  const loginHandler = (e) => {
+    e.preventDefault();
+
+    const loginEndPoint = `${baseEndpoint}token/`;
+
+    let bodyStr = JSON.stringify(formData);
+
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: bodyStr,
+    };
+
+    fetch(loginEndPoint, options)
+      .then((response) => {
+        if (response.status === 200) {
+          loginHandle(formData);
+        }
+        return response.json();
+      })
+      .then((authData) => {
+        console.log(authData);
+      })
+      .catch((err) => {
+        console.log("err", err);
+      });
+
     navigate(location?.state?.return_url || "/", {
       replace: true,
       state: {
@@ -22,14 +65,12 @@ export default function Login() {
       Login Page
       <br />
       {!user && (
-        <nav>
-          <button onClick={() => loginHandler({ id: 1, username: "berat" })}>
-            Berat olarak giriş yap
-          </button>
-          <button onClick={() => loginHandler({ id: 2, username: "sea" })}>
-            sea olarak giriş yap
-          </button>
-        </nav>
+        <>
+          <LoginForm
+            loginHandler={loginHandler}
+            handleChange={handleChange}
+          ></LoginForm>
+        </>
       )}
       {user && <nav>Hoşgeldiniz... {user.username}</nav>}
     </div>

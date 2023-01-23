@@ -1,5 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const baseEndpoint = process.env.REACT_APP_API_URL;
+
 const initialState = {
   user: false,
 };
