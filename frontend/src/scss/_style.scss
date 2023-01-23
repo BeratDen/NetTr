@@ -1,0 +1,23 @@
+﻿.nav-link.active {
+    color: $primary !important;
+}
+.navbar {
+    background-color: lightgray;
+    border-radius: 1rem;
+}
+.trailer {
+   
+    width: 10rem;
+}
+.myList {
+   
+    width: 10rem;
+}
+.buttonHolder {
+    width: 35%;
+    display: flex;
+    justify-content: space-between;
+    bottom: 20px;
+    position: absolute;
+    left: 5%;
+}
