@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import LoginForm from "./components/LoginForm";
 import { useState } from "react";
 const baseEndpoint = process.env.REACT_APP_API_URL;
+
 const initFormData = Object.freeze({
   username: "",
   password: "",
@@ -47,6 +48,8 @@ export default function Login() {
       })
       .then((authData) => {
         console.log(authData);
+        localStorage.setItem("access", authData.access);
+        localStorage.setItem("refresh", authData.refresh);
       })
       .catch((err) => {
         console.log("err", err);

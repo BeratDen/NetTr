@@ -6,6 +6,10 @@ class StaffEditorPermissionMixin():
     permissions_classes = [permissions.IsAdminUser, IsStaffEditorPermission]
 
 
+class PublicViewPermissionMixin():
+    permissions_classes = [permissions.AllowAny]
+
+
 class UserQuerySetMixin():
     user_field = 'user'
     allow_staff_view = False

@@ -5,7 +5,10 @@ export default function Recomended() {
   const show = {};
 
   return (
-    <Card className="bg-dark text-white my-3">
+    <Card
+      className="bg-dark text-white my-3 rounded-0"
+      style={{ borderBottom: "5px solid gray" }}
+    >
       <Card.Img src="https://picsum.photos/1920/1080" alt="Card image" />
       <Card.ImgOverlay>
         <Card.Title>Card title</Card.Title>

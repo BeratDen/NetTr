@@ -10,6 +10,7 @@ import {
 } from "./pages/product";
 import AuthLayout from "./pages/auth/AuthLayout";
 import Login from "./pages/auth/Login";
+import Register from "./pages/auth/Register";
 
 const routes = [
   {
@@ -76,6 +77,11 @@ const routes = [
         name: "login",
         path: "login",
         element: <Login></Login>,
+      },
+      {
+        name: "register",
+        path: "register",
+        element: <Register></Register>,
       },
     ],
   },

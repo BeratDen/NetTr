@@ -1,7 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const baseEndpoint = process.env.REACT_APP_API_URL;
-
 const initialState = {
   user: false,
 };
@@ -17,6 +15,8 @@ const auth = createSlice({
     logout: (state) => {
       state.user = false;
       localStorage.setItem("user", false);
+      localStorage.setItem("access", "token_not_valid");
+      localStorage.setItem("refresh", "token_not_valid");
     },
   },
 });

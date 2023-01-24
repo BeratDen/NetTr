@@ -1,10 +1,27 @@
-from rest_framework import generics
+from rest_framework import generics, permissions
+from rest_framework.decorators import permission_classes
 from api.mixins import (
     StaffEditorPermissionMixin,
-    UserQuerySetMixin
+    UserQuerySetMixin,
+    PublicViewPermissionMixin,
 )
 from .models import Product
 from .serializers import ProductSerializer
+
+
+@permission_classes(())
+class ProductListsApiView(
+    generics.ListAPIView
+):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    permission_classes = [permissions.AllowAny]
+
+    def get_queryset(self, *args, **kwargs):
+        return Product.objects.all()
+
+
+product_list_view = ProductListsApiView.as_view()
 
 
 class ProductListCreateAPIView(
