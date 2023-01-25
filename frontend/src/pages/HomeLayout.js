@@ -42,12 +42,12 @@ export default function HomeLayout() {
 
               <NavDropdown
                 id="nav-dropdown"
-                title="Dashboard"
+                title={user.username}
                 className="text-secondary"
               >
                 <NavDropdown.Item>
                   <NavLink className="nav-link" to={url("home.profile")}>
-                    Dashboard
+                    Profile
                   </NavLink>
                 </NavDropdown.Item>
                 <NavDropdown.Item>

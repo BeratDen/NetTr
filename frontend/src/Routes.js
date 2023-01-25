@@ -1,5 +1,6 @@
 import PrivateRoute from "./components/PrivateRoutes";
 import { Profile } from "./pages/profile";
+import DashBoard from "./pages/profile/Dashboard";
 import { Contact, HomeLayout, Page404, Home } from "./pages";
 import {
   Product,
@@ -82,6 +83,15 @@ const routes = [
         name: "register",
         path: "register",
         element: <Register></Register>,
+      },
+      {
+        name: "dashboard",
+        path: "dashboard",
+        element: (
+          <PrivateRoute>
+            <DashBoard></DashBoard>
+          </PrivateRoute>
+        ),
       },
     ],
   },

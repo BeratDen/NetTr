@@ -9,11 +9,13 @@ import Footer from "./components/Footer";
 
 export default function Home() {
   const { items } = useSelector((state) => state.product);
+  const { user } = useSelector((state) => state.auth);
   console.log(items);
 
   return (
     <div>
       <Recomended></Recomended>
+      <div className="text-white h3">Title</div>
       <Row xs={1} md={5} className="">
         {items.map((product) => (
           <ProductCard
@@ -25,9 +27,13 @@ export default function Home() {
           ></ProductCard>
         ))}
       </Row>
-      <Jumbotron></Jumbotron>
-      <Jumbotron></Jumbotron>
-      <Jumbotron></Jumbotron>
+      {!user && (
+        <>
+          <Jumbotron></Jumbotron>
+          <Jumbotron></Jumbotron>
+          <Jumbotron></Jumbotron>
+        </>
+      )}
 
       <Footer></Footer>
     </div>
